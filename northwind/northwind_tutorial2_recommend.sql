@@ -80,10 +80,11 @@ create elabel if not exists SIMILARITY;
 
 -- // test
 -- MATCH (c1:customer)-[r1:RATED]->(p:product)<-[r2:RATED]-(c2:customer)
--- WITH c1, c2, SUM(r1.rating::float*r2.rating::float) as dot_product, count(p) as dot_length,
+-- WITH c1, c2, p, r1, r2, SUM(r1.rating*r2.rating) as summ
+-- WITH c1, c2, summ, count(p) as dot_length,
 -- c1.p_length as c1_plength, c2.p_length as c2_plength, c1.r_length as c1_rlength, c2.r_length as c2_rlength,
--- SUM(r1.rating::float*r2.rating::float) / ( c1.r_length::float * c2.r_length::float ) as similarity
--- return c1, c2, dot_product, dot_length, similarity
+-- summ / ( c1.r_length * c2.r_length ) as similarity
+-- return c1, c2, summ, dot_length, similarity
 -- limit 10;
 
 -- INSERT EDGE 2215
